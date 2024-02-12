@@ -8,7 +8,8 @@ program
 
 program
   .command('list')
-  .option('-l, --location <location>')
+  .option('-loc, --location <location>')
+  .option('-lang, --language <language>')
   .action(handleListCommand)
 
 await program.parseAsync()
