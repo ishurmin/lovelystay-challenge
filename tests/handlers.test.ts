@@ -4,6 +4,7 @@ import { DbUser } from '../src/db/user.js'
 
 const getUserMock = jest.fn<(username: string) => Promise<GithubUser | null>>()
 const createUserMock = jest.fn<(user: DbUser) => Promise<void>>()
+const listUsersMock = jest.fn<() => Promise<DbUser[]>>()
 
 jest.unstable_mockModule('../src/services/github.js',() => ({
   default: {
@@ -13,16 +14,21 @@ jest.unstable_mockModule('../src/services/github.js',() => ({
 
 jest.unstable_mockModule('../src/db/index.js', () => ({
   default: {
-    createUser: createUserMock
+    createUser: createUserMock,
+    listUsers: listUsersMock
   }
 }))
 
 beforeEach(() => {
   getUserMock.mockReset()
   createUserMock.mockReset()
+  listUsersMock.mockReset()
 })
 
-const { handleAddCommand } = await import('../src/handlers.js')
+const {
+  handleAddCommand,
+  handleListCommand
+} = await import('../src/handlers.js')
 
 describe('adding user', () => {
 
@@ -59,3 +65,23 @@ describe('adding user', () => {
   })
 })
 
+describe('listing users', () => {
+
+  test('should list all users', async () => {
+    const users: DbUser[] = [
+      {
+        name: 'Some Name',
+        location: null,
+        username: 'some-username'
+      }
+    ]
+
+    listUsersMock.mockResolvedValue(users)
+
+    await handleListCommand()
+
+    expect(listUsersMock)
+      .toHaveBeenCalledTimes(1)
+  })
+
+})
