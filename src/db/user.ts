@@ -13,3 +13,9 @@ export const createUser = async (user: DbUser) => {
     ON CONFLICT DO NOTHING
   `, user)
 }
+
+export const listUsers = async () => {
+  return await database.any<DbUser>(`
+    SELECT * FROM users
+  `)
+}

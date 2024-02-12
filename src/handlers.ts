@@ -8,3 +8,8 @@ export const handleAddCommand = async (username: string) => {
     await db.createUser({...user, username: username})
   }
 }
+
+export const handleListCommand = async () => {
+  const users = await db.listUsers()
+  console.table(users)
+}
