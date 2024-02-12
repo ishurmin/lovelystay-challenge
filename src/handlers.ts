@@ -9,7 +9,7 @@ export const handleAddCommand = async (username: string) => {
   }
 }
 
-export const handleListCommand = async () => {
-  const users = await db.listUsers()
+export const handleListCommand = async (options: {location?: string}) => {
+  const users = await db.listUsers(options)
   console.table(users)
 }
