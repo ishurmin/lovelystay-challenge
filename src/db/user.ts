@@ -14,8 +14,9 @@ export const createUser = async (user: DbUser) => {
   `, user)
 }
 
-export const listUsers = async () => {
+export const listUsers = async (filter: {location?: string}) => {
   return await database.any<DbUser>(`
     SELECT * FROM users
-  `)
+    WHERE ($1 IS NULL OR location = $1)
+  `, [filter?.location])
 }

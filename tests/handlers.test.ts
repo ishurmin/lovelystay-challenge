@@ -68,20 +68,20 @@ describe('adding user', () => {
 describe('listing users', () => {
 
   test('should list all users', async () => {
-    const users: DbUser[] = [
-      {
-        name: 'Some Name',
-        location: null,
-        username: 'some-username'
-      }
-    ]
 
-    listUsersMock.mockResolvedValue(users)
-
-    await handleListCommand()
+    await handleListCommand({})
 
     expect(listUsersMock)
-      .toHaveBeenCalledTimes(1)
+      .toHaveBeenCalledWith({})
+  })
+
+  test('should list only users with particular location', async () => {
+    const location = 'some location'
+
+    await handleListCommand({location: location})
+
+    expect(listUsersMock)
+      .toHaveBeenCalledWith({location: location})
   })
 
 })

@@ -1,7 +1,7 @@
 # LovelyStay challenge
 Command-line Node.js application that
 * gets user details from GitHub by username and persists them in database
-* lists users from the database
+* lists users from the database and filter them by location
 ## How to run
 ### With docker (recommended)
 1. Run the **database** container, **migration** and build the **cli** image
@@ -60,9 +60,9 @@ Add GitHub user to the database
 ```
 node app.js add <username>
 ```
-List all saved users
+List all saved users and optionally filter by location
 ```
-node app.js list
+node app.js list [-l <location>]
 ```
 
 ## Testing
